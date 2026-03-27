@@ -234,7 +234,8 @@ class HomePageState extends ConsumerState<HomePage> {
   }
 
   Future<void> initNotifications() async {
-    var notifGranted = await Permission.notification.isGranted;
+    var notifGranted = await Permission.notification.
+    isGranted;
     if (notifGranted) {
       NotificationHandler notificationHandler = NotificationHandler();
       await notificationHandler.initNotifications();

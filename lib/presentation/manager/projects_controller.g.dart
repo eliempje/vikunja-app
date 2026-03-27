@@ -6,25 +6,50 @@ part of 'projects_controller.dart';
 // RiverpodGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint, type=warning
+
+@ProviderFor(ProjectsController)
+final projectsControllerProvider = ProjectsControllerProvider._();
+
+final class ProjectsControllerProvider
+    extends $AsyncNotifierProvider<ProjectsController, List<Project>> {
+  ProjectsControllerProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'projectsControllerProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$projectsControllerHash();
+
+  @$internal
+  @override
+  ProjectsController create() => ProjectsController();
+}
+
 String _$projectsControllerHash() =>
     r'ebc40d80bcf2d05af4d2178b20f26eec9f1a0cfe';
 
-/// See also [ProjectsController].
-@ProviderFor(ProjectsController)
-final projectsControllerProvider =
-    AutoDisposeAsyncNotifierProvider<
-      ProjectsController,
-      List<Project>
-    >.internal(
-      ProjectsController.new,
-      name: r'projectsControllerProvider',
-      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-          ? null
-          : _$projectsControllerHash,
-      dependencies: null,
-      allTransitiveDependencies: null,
-    );
-
-typedef _$ProjectsController = AutoDisposeAsyncNotifier<List<Project>>;
-// ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package
+abstract class _$ProjectsController extends $AsyncNotifier<List<Project>> {
+  FutureOr<List<Project>> build();
+  @$mustCallSuper
+  @override
+  void runBuild() {
+    final ref = this.ref as $Ref<AsyncValue<List<Project>>, List<Project>>;
+    final element =
+        ref.element
+            as $ClassProviderElement<
+              AnyNotifier<AsyncValue<List<Project>>, List<Project>>,
+              AsyncValue<List<Project>>,
+              Object?,
+              Object?
+            >;
+    element.handleCreate(ref, build);
+  }
+}
