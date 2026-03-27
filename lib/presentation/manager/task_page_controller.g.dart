@@ -6,25 +6,50 @@ part of 'task_page_controller.dart';
 // RiverpodGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint, type=warning
+
+@ProviderFor(TaskPageController)
+final taskPageControllerProvider = TaskPageControllerProvider._();
+
+final class TaskPageControllerProvider
+    extends $AsyncNotifierProvider<TaskPageController, TaskPageModel> {
+  TaskPageControllerProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'taskPageControllerProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$taskPageControllerHash();
+
+  @$internal
+  @override
+  TaskPageController create() => TaskPageController();
+}
+
 String _$taskPageControllerHash() =>
     r'8d11de5cfb2f18f9153e9fb7afa9f7f49741f8bd';
 
-/// See also [TaskPageController].
-@ProviderFor(TaskPageController)
-final taskPageControllerProvider =
-    AutoDisposeAsyncNotifierProvider<
-      TaskPageController,
-      TaskPageModel
-    >.internal(
-      TaskPageController.new,
-      name: r'taskPageControllerProvider',
-      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-          ? null
-          : _$taskPageControllerHash,
-      dependencies: null,
-      allTransitiveDependencies: null,
-    );
-
-typedef _$TaskPageController = AutoDisposeAsyncNotifier<TaskPageModel>;
-// ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package
+abstract class _$TaskPageController extends $AsyncNotifier<TaskPageModel> {
+  FutureOr<TaskPageModel> build();
+  @$mustCallSuper
+  @override
+  void runBuild() {
+    final ref = this.ref as $Ref<AsyncValue<TaskPageModel>, TaskPageModel>;
+    final element =
+        ref.element
+            as $ClassProviderElement<
+              AnyNotifier<AsyncValue<TaskPageModel>, TaskPageModel>,
+              AsyncValue<TaskPageModel>,
+              Object?,
+              Object?
+            >;
+    element.handleCreate(ref, build);
+  }
+}

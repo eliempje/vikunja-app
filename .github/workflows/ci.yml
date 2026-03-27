@@ -24,10 +24,18 @@ jobs:
     uses: ./.github/workflows/test.yml
     secrets: inherit
 
-  release:
-    name: Release
+  # release:
+  #   name: Release
+  #   if: ${{ github.ref_type == 'tag' || github.ref_name == 'main' || (github.event_name == 'release' && github.event.action == 'published') }}
+  #   uses: ./.github/workflows/release.yml
+  #   needs:
+  #     - test
+  #   secrets: inherit
+
+  release-ios:
+    name: Release iOS
     if: ${{ github.ref_type == 'tag' || github.ref_name == 'main' || (github.event_name == 'release' && github.event.action == 'published') }}
-    uses: ./.github/workflows/release.yml
+    uses: ./.github/workflows/release-ios.yml
     needs:
       - test
     secrets: inherit

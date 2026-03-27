@@ -1,0 +1,73 @@
+name: release-ios
+
+on:
+  workflow_call:
+
+jobs:
+  release-ios:
+    name: Build and Release iOS (iPhone)
+    # GitHub Actions does not provide an "ios" runner label.
+    # iOS/iPhone apps must be built on a macOS runner with Xcode.
+    runs-on: macos-latest
+    env:
+      LC_ALL: en_US.UTF-8
+      LANG: en_US.UTF-8
+      FASTLANE_SKIP_UPDATE_CHECK: true
+      FASTLANE_HIDE_CHANGELOG: true
+      MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
+      FASTLANE_PASSWORD: ${{ secrets.FASTLANE_PASSWORD }}
+      FASTLANE_APPLE_APPLICATION_SPECIFIC_PASSWORD: ${{ secrets.FASTLANE_APPLE_APPLICATION_SPECIFIC_PASSWORD }}
+      FASTLANE_SESSION: ${{ secrets.FASTLANE_SESSION }}
+      CONTACT_EMAIL: ${{ secrets.CONTACT_EMAIL }}
+      CONTACT_FIRST_NAME: ${{ secrets.CONTACT_FIRST_NAME }}
+      CONTACT_LAST_NAME: ${{ secrets.CONTACT_LAST_NAME }}
+      CONTACT_PHONE: ${{ secrets.CONTACT_PHONE }}
+      MATCH_GIT_PRIVATE_KEY: ${{ secrets.MATCH_GIT_PRIVATE_KEY }}
+    steps:
+      - name: Clone repository
+        uses: actions/checkout@v4
+
+      - name: Setup Flutter
+        uses: flutter-actions/setup-flutter@v4
+        with:
+          channel: stable
+          version: latest
+          cache: true
+
+      - name: Flutter dependencies
+        run: |
+          flutter --version
+          flutter pub get
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 3.3
+          bundler-cache: false
+
+      - name: Setup SSH key for match repo
+        if: env.MATCH_GIT_PRIVATE_KEY != ''
+        uses: webfactory/ssh-agent@v0.9.0
+        with:
+          ssh-private-key: ${{ env.MATCH_GIT_PRIVATE_KEY }}
+
+      - name: Install Fastlane dependencies
+        working-directory: ios
+        run: |
+          gem install bundler -v 2.4.22
+          bundle config path vendor/bundle
+          bundle install
+
+      - name: Setup iOS signing
+        working-directory: ios
+        run: bundle exec fastlane ios signing
+
+      - name: Deploy iOS beta to TestFlight
+        if: github.event_name == 'push'
+        working-directory: ios
+        run: bundle exec fastlane ios beta
+
+      - name: Deploy iOS release to App Store
+        if: github.event_name == 'release' && github.event.action == 'published'
+        working-directory: ios
+        run: bundle exec fastlane ios release

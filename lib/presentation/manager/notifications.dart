@@ -221,6 +221,7 @@ class NotificationHandler {
 
     if (taskResponse.isSuccessful) {
       await notificationsPlugin.cancelAll();
+      final localTimezone = await FlutterTimezone.getLocalTimezone();
       for (final task in taskResponse.toSuccess().body) {
         if (task.done) continue;
         for (final reminder in task.reminderDates) {
@@ -230,7 +231,7 @@ class NotificationHandler {
             "This is your reminder for '${task.title}'",
             notificationsPlugin,
             reminder.reminder,
-            await FlutterTimezone.getLocalTimezone(),
+            localTimezone.identifier,
             platformChannelSpecificsReminders,
           );
         }
@@ -241,7 +242,7 @@ class NotificationHandler {
             "The task '${task.title}' is due.",
             notificationsPlugin,
             task.dueDate!,
-            await FlutterTimezone.getLocalTimezone(),
+            localTimezone.identifier,
             platformChannelSpecificsDueDate,
           );
         }
