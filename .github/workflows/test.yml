@@ -1,6 +1,9 @@
 on:
   workflow_call:
 
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: 'true'
+
 jobs:
   build:
     # Skip on main/tags since the release job will build anyway
