@@ -34,7 +34,7 @@ jobs:
 
   release-ios:
     name: Release iOS
-    if: ${{ github.ref_type == 'tag' || github.ref_name == 'main' || (github.event_name == 'release' && github.event.action == 'published') }}
+    if: ${{ github.ref_type == 'tag' || (github.event_name == 'release' && github.event.action == 'published') }}
     uses: ./.github/workflows/release-ios.yml
     needs:
       - test
